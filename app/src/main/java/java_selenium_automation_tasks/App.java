@@ -3,6 +3,7 @@
  */
 package java_selenium_automation_tasks;
 
+import java.time.Duration;
 import java.util.List;
 
 import org.openqa.selenium.By;
@@ -10,6 +11,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 
@@ -120,13 +123,45 @@ public class App {
 
         driver.get("https://jqueryui.com/datepicker/");
 
-        WebElement click_DatePicker = driver.findElement(By.xpath("//input[@id='datepicker' and @class='hasDatepicker']"));
-        click_DatePicker.click();
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//iframe[@class='demo-frame']")));
+        
+        WebElement iframe = driver.findElement(By.xpath("//iframe[@class='demo-frame']"));
+        driver.switchTo().frame(iframe);
 
-        List<WebElement> days = driver.findElements(By.xpath("//th[@class='ui-datepicker-week-end']"));
+        System.out.println("I am here");
+
+        WebDriverWait date_picker_wait = new WebDriverWait(driver, Duration.ofSeconds(30));
+        date_picker_wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//input[@class='hasDatepicker']")));
+
+        WebElement date_picker = driver.findElement(By.xpath("//input[@class='hasDatepicker']"));
+        date_picker.click();
 
         List<WebElement> dates = driver.findElements(By.className("ui-datepicker-week-end"));
 
+        int getdates =dates.size()-1;
+
+        for(int i =3; i<=getdates;){
+
+            if(i%2==0){
+                WebElement Sunday = driver.findElement(By.xpath("//table[@class='ui-datepicker-calendar']//th[1]"));
+                String getSundaytxt = Sunday.getText();
+                System.out.println(getSundaytxt+" : "+dates.get(i).getText());  
+                i++;
+            }
+            else if(i%2!=0){
+                WebElement Saturday = driver.findElement(By.xpath("//table[@class='ui-datepicker-calendar']//th[7]"));
+                String getSaturdaytxt = Saturday.getText();
+                System.out.println(getSaturdaytxt+" : "+dates.get(i).getText());
+                i++;
+            }
+            else{
+                System.out.println("Invalid Dates");
+            }
+
+
+        }
+        driver.switchTo().defaultContent();
         
     }
 
@@ -135,16 +170,21 @@ public class App {
 		WebDriverManager.chromedriver().setup();
 		WebDriver driver = new ChromeDriver(chromeOptions);
 
+        //########################################################################################
         //Please Note for Executing a particular TestCase for Example If you want to Execute TestCase 02, Comment the Other TestCases other
         // TestCase02 and Execute.
+        //#########################################################################################
 
         // Amazon Search to get mobiles title of 4 products from the list in the search results
         TestCase01(driver);
 
         //Amazon Product search -  To get Iphone products which contains 128GB Internal storage only
-        TestCase02(driver);
+        //TestCase02(driver);
 
         // Wikipedia Task - To search for Apple.Inc and retrieve the Founders list of Apple.Inc
-        TestCase03(driver);
+        //TestCase03(driver);
+
+        // DatePicker Element- Selenium Task To Display Weekends for the current month only using JQueryUI website
+        TestCase04(driver);
    }
 }
