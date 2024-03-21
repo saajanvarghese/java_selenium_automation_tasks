@@ -92,31 +92,10 @@ public class App {
     // Wikipedia Task - To search for Apple.Inc and retrieve the Founders list of Apple.Inc
     public static void TestCase03(WebDriver driver) throws InterruptedException{
 
-        driver.get("https://www.wikipedia.org/");
+        Wikipedia wikipedia_tasks = new Wikipedia();
 
-        WebElement searchbox_click = driver.findElement(By.xpath("//input[@id=\"searchInput\" and @name=\"search\"]"));
-        searchbox_click.click();
+        wikipedia_tasks.Task01_Search_Apple_founders_list("Apple");
 
-        searchbox_click.sendKeys("Apple");
-        Thread.sleep(1000);
-
-        WebElement searchbox_drop_down_options = driver.findElement(By.xpath("//div[@class=\"suggestions-dropdown\"]//a[2]"));
-        searchbox_drop_down_options.click();
-
-        Thread.sleep(1000);
-
-        List<WebElement> list = driver.findElements(By.xpath("//tr[9]//td//div[@class=\"plainlist\"]//ul//li//a"));
-
-        System.out.println(list.size());
-
-        for(int i=0; i<list.size(); i++){
-
-            String element_name = list.get(i).getText();
-            
-                System.out.println("Founders of Apple.Inc "+element_name);
-            
-            Thread.sleep(100);
-        }
     }
 
     public static void TestCase04(WebDriver driver) throws InterruptedException{
