@@ -92,9 +92,15 @@ public class App {
     // Wikipedia Task - To search for Apple.Inc and retrieve the Founders list of Apple.Inc
     public static void TestCase03(WebDriver driver) throws InterruptedException{
 
-        Wikipedia wikipedia_tasks = new Wikipedia();
+        Wikipedia wikipedia_tasks = new Wikipedia(driver);
 
-        wikipedia_tasks.Task01_Search_Apple_founders_list("Apple");
+        //wikipedia_tasks.navigateToWikipediaPage();
+
+        //wikipedia_tasks.Task01_Search_Apple_founders_list("Apple");
+
+        wikipedia_tasks.navigateToWikipediaPage();
+
+        wikipedia_tasks.Task02_Search_Celebrity_Academy_Awards("Health Ledger", "Academy Awards", "2009");
 
     }
 
@@ -155,15 +161,15 @@ public class App {
         //#########################################################################################
 
         // Amazon Search to get mobiles title of 4 products from the list in the search results
-        TestCase01(driver);
+        //TestCase01(driver);
 
         //Amazon Product search -  To get Iphone products which contains 128GB Internal storage only
         //TestCase02(driver);
 
         // Wikipedia Task - To search for Apple.Inc and retrieve the Founders list of Apple.Inc
-        //TestCase03(driver);
+        TestCase03(driver);
 
         // DatePicker Element- Selenium Task To Display Weekends for the current month only using JQueryUI website
-        TestCase04(driver);
+        //TestCase04(driver);
    }
 }
